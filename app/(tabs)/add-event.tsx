@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, TextInput, Switch, TouchableOpacity } from 'react-native';
+import { StyleSheet, ScrollView, TextInput, Switch } from 'react-native';
 import { router } from 'expo-router';
 
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+import Button from '@/components/ui/Button';
 import { addEvent } from '@/utils/storage';
 import { Event } from '@/utils/types';
 
@@ -80,12 +81,14 @@ export default function AddEventScreen() {
         
         {/* Date and time pickers would go here */}
         
-        <TouchableOpacity 
-          style={styles.saveButton}
+        <Button 
+          title="Create Event"
           onPress={handleCreateEvent}
-        >
-          <ThemedText style={styles.saveButtonText}>Create Event</ThemedText>
-        </TouchableOpacity>
+          variant="primary"
+          size="lg"
+          style={{ marginTop: 24, marginBottom: 40 }}
+          fullWidth
+        />
       </ScrollView>
     </ThemedView>
   );
@@ -114,18 +117,5 @@ const styles = StyleSheet.create({
   textArea: {
     height: 100,
     textAlignVertical: 'top',
-  },
-  saveButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
-    padding: 16,
-    alignItems: 'center',
-    marginTop: 24,
-    marginBottom: 40,
-  },
-  saveButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
+  }
 });

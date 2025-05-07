@@ -1,8 +1,9 @@
 import { PropsWithChildren, useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import Button from '@/components/ui/Button';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { AppTheme } from '@/constants/Theme';
 
@@ -11,20 +12,23 @@ export function Collapsible({ children, title }: PropsWithChildren & { title: st
 
   return (
     <ThemedView>
-      <TouchableOpacity
-        style={styles.heading}
+      <Button
+        title={title}
         onPress={() => setIsOpen((value) => !value)}
-        activeOpacity={0.8}>
-        <IconSymbol
-          name="chevron.right"
-          size={18}
-          weight="medium"
-          color={AppTheme.colors.icon}
-          style={{ transform: [{ rotate: isOpen ? '90deg' : '0deg' }] }}
-        />
-
-        <ThemedText type="defaultSemiBold">{title}</ThemedText>
-      </TouchableOpacity>
+        variant="ghost"
+        size="md"
+        style={styles.heading}
+        leftIcon={
+          <IconSymbol
+            name="chevron.right"
+            size={18}
+            weight="medium"
+            color={AppTheme.colors.icon}
+            style={{ transform: [{ rotate: isOpen ? '90deg' : '0deg' }] }}
+          />
+        }
+        textStyle={{ fontWeight: '600' }}
+      />
       {isOpen && <ThemedView style={styles.content}>{children}</ThemedView>}
     </ThemedView>
   );
@@ -32,9 +36,9 @@ export function Collapsible({ children, title }: PropsWithChildren & { title: st
 
 const styles = StyleSheet.create({
   heading: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
+    alignSelf: 'flex-start',
+    paddingHorizontal: 0,
+    paddingVertical: 4
   },
   content: {
     marginTop: 6,

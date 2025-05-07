@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+import Button from '@/components/ui/Button';
 import { getEventsByMonth, getSettings } from '@/utils/storage';
 import { Event, MonthData, CalendarDay } from '@/utils/types';
 
@@ -154,17 +155,25 @@ export default function CalendarScreen() {
     
     return (
       <ThemedView style={styles.header}>
-        <TouchableOpacity onPress={handlePrevMonth}>
-          <ThemedText style={styles.headerButton}>{'<'}</ThemedText>
-        </TouchableOpacity>
+        <Button 
+          title="<"
+          onPress={handlePrevMonth}
+          variant="ghost"
+          size="sm"
+          style={{ padding: 8 }}
+        />
         
         <ThemedText style={styles.headerTitle}>
           {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
         </ThemedText>
         
-        <TouchableOpacity onPress={handleNextMonth}>
-          <ThemedText style={styles.headerButton}>{'>'}</ThemedText>
-        </TouchableOpacity>
+        <Button 
+          title=">"
+          onPress={handleNextMonth}
+          variant="ghost"
+          size="sm"
+          style={{ padding: 8 }}
+        />
       </ThemedView>
     );
   };
@@ -204,28 +213,22 @@ export default function CalendarScreen() {
         {rows.map((row, rowIndex) => (
           <ThemedView key={rowIndex} style={styles.calendarRow}>
             {row.map((day, dayIndex) => (
-              <TouchableOpacity
+              <Button
                 key={dayIndex}
+                title={day.date.getDate().toString()}
+                onPress={() => handleDayPress(day)}
+                variant={day.isToday ? "primary" : "ghost"}
+                size="sm"
                 style={[
                   styles.calendarDay,
                   !day.isCurrentMonth && styles.outsideMonth,
-                  day.isToday && styles.today,
                 ]}
-                onPress={() => handleDayPress(day)}
+                textStyle={day.isToday ? styles.todayText : styles.calendarDayText}
               >
-                <ThemedText
-                  style={[
-                    styles.calendarDayText,
-                    day.isToday && styles.todayText,
-                  ]}
-                >
-                  {day.date.getDate()}
-                </ThemedText>
-                
                 {day.events.length > 0 && (
                   <ThemedView style={styles.eventIndicator} />
                 )}
-              </TouchableOpacity>
+              </Button>
             ))}
           </ThemedView>
         ))}
@@ -265,11 +268,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  headerButton: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    padding: 8,
-  },
   weekDays: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -302,9 +300,6 @@ const styles = StyleSheet.create({
   },
   outsideMonth: {
     opacity: 0.3,
-  },
-  today: {
-    backgroundColor: '#007AFF',
   },
   todayText: {
     color: 'white',

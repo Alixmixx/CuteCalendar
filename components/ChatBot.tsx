@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, FlatList, ActivityIndicator, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TextInput, FlatList, ActivityIndicator, View } from 'react-native';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
+import Button from '@/components/ui/Button';
 
 /**
  * Extended Message type to support tool calls
@@ -179,16 +180,15 @@ export function ChatBot({
           placeholderTextColor="#888"
           multiline
         />
-        <TouchableOpacity
-          style={[styles.sendButton, !inputText.trim() && styles.sendButtonDisabled]}
+        <Button
+          title="Send"
           onPress={handleSend}
-          disabled={!inputText.trim() || isLoading}>
-          {isLoading ? (
-            <ActivityIndicator color="#fff" size="small" />
-          ) : (
-            <ThemedText style={styles.sendButtonText}>Send</ThemedText>
-          )}
-        </TouchableOpacity>
+          disabled={!inputText.trim() || isLoading}
+          loading={isLoading}
+          variant="primary"
+          size="sm"
+          style={[styles.sendButton, !inputText.trim() && styles.sendButtonDisabled]}
+        />
       </ThemedView>
     </ThemedView>
   );
@@ -288,17 +288,9 @@ const styles = StyleSheet.create({
     maxHeight: 100,
   },
   sendButton: {
-    backgroundColor: '#007AFF',
     borderRadius: 20,
-    paddingHorizontal: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   sendButtonDisabled: {
-    backgroundColor: '#A9A9A9',
-  },
-  sendButtonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    opacity: 0.5,
   },
 });

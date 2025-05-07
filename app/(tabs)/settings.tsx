@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Switch, TouchableOpacity } from 'react-native';
+import { StyleSheet, Switch } from 'react-native';
 
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+import Button from '@/components/ui/Button';
 import { getSettings, updateSetting, clearAllData } from '@/utils/storage';
 import { Settings } from '@/utils/types';
 
@@ -66,24 +67,27 @@ export default function SettingsScreen() {
       <ThemedView style={styles.settingItem}>
         <ThemedText>Theme</ThemedText>
         <ThemedView style={styles.radioGroup}>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.theme === 'light' && styles.radioButtonSelected]}
+          <Button
+            title="Light"
             onPress={() => handleThemeChange('light')}
-          >
-            <ThemedText>Light</ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.theme === 'dark' && styles.radioButtonSelected]}
+            variant={settings.theme === 'light' ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
+          <Button
+            title="Dark"
             onPress={() => handleThemeChange('dark')}
-          >
-            <ThemedText>Dark</ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.theme === 'system' && styles.radioButtonSelected]}
+            variant={settings.theme === 'dark' ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
+          <Button
+            title="System"
             onPress={() => handleThemeChange('system')}
-          >
-            <ThemedText>System</ThemedText>
-          </TouchableOpacity>
+            variant={settings.theme === 'system' ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
         </ThemedView>
       </ThemedView>
       
@@ -91,42 +95,47 @@ export default function SettingsScreen() {
       <ThemedView style={styles.settingItem}>
         <ThemedText>Default View</ThemedText>
         <ThemedView style={styles.radioGroup}>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.defaultView === 'month' && styles.radioButtonSelected]}
+          <Button
+            title="Month"
             onPress={() => handleDefaultViewChange('month')}
-          >
-            <ThemedText>Month</ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.defaultView === 'week' && styles.radioButtonSelected]}
+            variant={settings.defaultView === 'month' ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
+          <Button
+            title="Week"
             onPress={() => handleDefaultViewChange('week')}
-          >
-            <ThemedText>Week</ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.defaultView === 'day' && styles.radioButtonSelected]}
+            variant={settings.defaultView === 'week' ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
+          <Button
+            title="Day"
             onPress={() => handleDefaultViewChange('day')}
-          >
-            <ThemedText>Day</ThemedText>
-          </TouchableOpacity>
+            variant={settings.defaultView === 'day' ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
         </ThemedView>
       </ThemedView>
       
       <ThemedView style={styles.settingItem}>
         <ThemedText>Start Week on</ThemedText>
         <ThemedView style={styles.radioGroup}>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.startDayOfWeek === 0 && styles.radioButtonSelected]}
+          <Button
+            title="Sunday"
             onPress={() => handleStartDayChange(0)}
-          >
-            <ThemedText>Sunday</ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.startDayOfWeek === 1 && styles.radioButtonSelected]}
+            variant={settings.startDayOfWeek === 0 ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
+          <Button
+            title="Monday"
             onPress={() => handleStartDayChange(1)}
-          >
-            <ThemedText>Monday</ThemedText>
-          </TouchableOpacity>
+            variant={settings.startDayOfWeek === 1 ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
         </ThemedView>
       </ThemedView>
       
@@ -134,40 +143,46 @@ export default function SettingsScreen() {
       <ThemedView style={styles.settingItem}>
         <ThemedText>Default Reminder Time</ThemedText>
         <ThemedView style={styles.radioGroup}>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.defaultReminderTime === 5 && styles.radioButtonSelected]}
+          <Button
+            title="5 min"
             onPress={() => handleReminderTimeChange(5)}
-          >
-            <ThemedText>5 min</ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.defaultReminderTime === 15 && styles.radioButtonSelected]}
+            variant={settings.defaultReminderTime === 5 ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
+          <Button
+            title="15 min"
             onPress={() => handleReminderTimeChange(15)}
-          >
-            <ThemedText>15 min</ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.defaultReminderTime === 30 && styles.radioButtonSelected]}
+            variant={settings.defaultReminderTime === 15 ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
+          <Button
+            title="30 min"
             onPress={() => handleReminderTimeChange(30)}
-          >
-            <ThemedText>30 min</ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.radioButton, settings.defaultReminderTime === 60 && styles.radioButtonSelected]}
+            variant={settings.defaultReminderTime === 30 ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
+          <Button
+            title="1 hour"
             onPress={() => handleReminderTimeChange(60)}
-          >
-            <ThemedText>1 hour</ThemedText>
-          </TouchableOpacity>
+            variant={settings.defaultReminderTime === 60 ? "primary" : "outline"}
+            size="sm"
+            style={styles.radioButton}
+          />
         </ThemedView>
       </ThemedView>
       
       <ThemedText style={styles.sectionTitle}>Data</ThemedText>
-      <TouchableOpacity
-        style={styles.resetButton}
+      <Button
+        title="Reset All Data"
         onPress={handleResetData}
-      >
-        <ThemedText style={styles.resetButtonText}>Reset All Data</ThemedText>
-      </TouchableOpacity>
+        variant="secondary"
+        size="md"
+        style={{ backgroundColor: 'red', marginTop: 8 }}
+        textStyle={{ color: 'white' }}
+      />
     </ThemedView>
   );
 }
@@ -197,25 +212,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   radioButton: {
-    borderWidth: 1,
-    borderColor: '#007AFF',
-    borderRadius: 8,
-    padding: 8,
     marginRight: 8,
     marginBottom: 8,
-  },
-  radioButtonSelected: {
-    backgroundColor: '#007AFF',
-  },
-  resetButton: {
-    backgroundColor: 'red',
-    borderRadius: 8,
-    padding: 16,
-    alignItems: 'center',
-    marginTop: 24,
-  },
-  resetButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
+  }
 });

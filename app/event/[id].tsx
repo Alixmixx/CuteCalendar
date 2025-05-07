@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import { Stack, useLocalSearchParams, router } from 'expo-router';
 
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+import Button from '@/components/ui/Button';
 import { getEvents, deleteEvent, getCategoryById } from '@/utils/storage';
 import { Event, Category } from '@/utils/types';
 
@@ -135,19 +136,22 @@ export default function EventDetailsScreen() {
       )}
       
       <ThemedView style={styles.actions}>
-        <TouchableOpacity 
-          style={styles.editButton}
+        <Button 
+          title="Edit"
           onPress={handleEditEvent}
-        >
-          <ThemedText style={styles.editButtonText}>Edit</ThemedText>
-        </TouchableOpacity>
+          variant="primary"
+          size="md"
+          style={{ flex: 1, marginRight: 8 }}
+        />
         
-        <TouchableOpacity 
-          style={styles.deleteButton}
+        <Button 
+          title="Delete"
           onPress={handleDeleteEvent}
-        >
-          <ThemedText style={styles.deleteButtonText}>Delete</ThemedText>
-        </TouchableOpacity>
+          variant="secondary"
+          size="md"
+          style={{ flex: 1, marginLeft: 8, backgroundColor: 'red' }}
+          textStyle={{ color: 'white' }}
+        />
       </ThemedView>
     </ThemedView>
   );
@@ -188,29 +192,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 32,
-  },
-  editButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
-    padding: 16,
-    flex: 1,
-    marginRight: 8,
-    alignItems: 'center',
-  },
-  editButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  deleteButton: {
-    backgroundColor: 'red',
-    borderRadius: 8,
-    padding: 16,
-    flex: 1,
-    marginLeft: 8,
-    alignItems: 'center',
-  },
-  deleteButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
+  }
 });
