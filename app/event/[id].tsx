@@ -5,13 +5,12 @@ import { Stack, useLocalSearchParams, router } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import Button from '@/components/ui/Button';
-import { getEvents, deleteEvent, getCategoryById } from '@/utils/storage';
-import { Event, Category } from '@/utils/types';
+import { getEvents, deleteEvent } from '@/utils/storage';
+import { Event } from '@/utils/types';
 
 export default function EventDetailsScreen() {
   const { id } = useLocalSearchParams();
   const [event, setEvent] = useState<Event | null>(null);
-  const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,14 +28,6 @@ export default function EventDetailsScreen() {
       
       if (foundEvent) {
         setEvent(foundEvent);
-        
-        // Load category if exists
-        if (foundEvent.categoryId) {
-          const foundCategory = await getCategoryById(foundEvent.categoryId);
-          if (foundCategory) {
-            setCategory(foundCategory);
-          }
-        }
       }
     } catch (error) {
       console.error('Error loading event details:', error);
@@ -91,40 +82,41 @@ export default function EventDetailsScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <Stack.Screen options={{ title: event.title }} />
+      <Stack.Screen options={{ title: event.contact.name }} />
       
       <ThemedView style={styles.eventHeader}>
-        <ThemedText style={styles.title}>{event.title}</ThemedText>
-        {category && (
-          <ThemedView 
-            style={[styles.categoryBadge, { backgroundColor: category.color }]}
-          >
-            <ThemedText style={styles.categoryText}>{category.name}</ThemedText>
-          </ThemedView>
-        )}
+        <ThemedText style={styles.title}>{event.contact.name}</ThemedText>
       </ThemedView>
       
       <ThemedView style={styles.detailSection}>
         <ThemedText style={styles.sectionTitle}>Time</ThemedText>
         <ThemedText>
-          {event.isAllDay 
-            ? 'All day' 
-            : `${new Date(event.startDate).toLocaleString()} - ${new Date(event.endDate || event.startDate).toLocaleString()}`
-          }
+          {new Date(event.startDate).toLocaleDateString(undefined, {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </ThemedText>
+        <ThemedText>
+          {new Date(event.startDate).toLocaleTimeString(undefined, {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+          })}
         </ThemedText>
       </ThemedView>
       
-      {event.location && (
-        <ThemedView style={styles.detailSection}>
-          <ThemedText style={styles.sectionTitle}>Location</ThemedText>
-          <ThemedText>{event.location}</ThemedText>
-        </ThemedView>
-      )}
+      <ThemedView style={styles.detailSection}>
+        <ThemedText style={styles.sectionTitle}>Contact Details</ThemedText>
+        <ThemedText>Phone: {event.contact.phone}</ThemedText>
+        <ThemedText>Email: {event.contact.email}</ThemedText>
+      </ThemedView>
       
-      {event.description && (
+      {event.contact.notes && (
         <ThemedView style={styles.detailSection}>
-          <ThemedText style={styles.sectionTitle}>Description</ThemedText>
-          <ThemedText>{event.description}</ThemedText>
+          <ThemedText style={styles.sectionTitle}>Notes</ThemedText>
+          <ThemedText>{event.contact.notes}</ThemedText>
         </ThemedView>
       )}
       
@@ -149,7 +141,7 @@ export default function EventDetailsScreen() {
           onPress={handleDeleteEvent}
           variant="secondary"
           size="md"
-          style={{ flex: 1, marginLeft: 8, backgroundColor: 'red' }}
+          style={{ flex: 1, marginLeft: 8, backgroundColor: '#E53E3E' }}
           textStyle={{ color: 'white' }}
         />
       </ThemedView>

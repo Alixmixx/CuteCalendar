@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Event, Category, Settings } from './types';
+import { Event, Settings } from './types';
 
 // Keys
 const EVENTS_KEY = '@CuteCalendar:events';
