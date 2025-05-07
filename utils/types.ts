@@ -1,27 +1,18 @@
 // Event type definition
 export interface Event {
   id: string;              // Unique identifier
-  title: string;           // Event title
-  description?: string;    // Optional description
+  contact: Contact;
   startDate: string;       // ISO date string
-  endDate?: string;        // ISO date string (optional for all-day events)
-  location?: string;       // Optional location
-  categoryId?: string;     // Optional category reference
-  isAllDay: boolean;       // Flag for all-day events
   reminder?: number;       // Minutes before event to trigger reminder
-  recurring?: {
-    type: 'daily' | 'weekly' | 'monthly' | 'yearly';
-    interval: number;      // Recurrence interval
-    endDate?: string;      // When recurrence ends (optional)
-  };
-  color?: string;          // Optional custom color override
 }
 
-// Category type definition
-export interface Category {
-  id: string;              // Unique identifier
-  name: string;            // Category name
-  color: string;           // Color for events in this category
+// Contact
+export interface Contact {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  notes: string
 }
 
 // App Settings type definition
